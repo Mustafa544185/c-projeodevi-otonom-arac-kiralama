@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Araç Konum Haritası</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    #harita {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Araç Konumları (Harita Üzerinde)</h2>
+<div id="harita"></div>
+
+<!-- Leaflet kütüphanesi -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+  const konumKoordinatlari = {
+    "Rauf Denktaş Cd. Selcuklu": [37.8885, 32.4826],
+    "Eski Meram Cd. Meram": [37.8546, 32.4487],
+    "Şehit Nazım Bey Cd. Karatay": [37.8719, 32.5065],
+    "Fetih Cd. Karatay": [37.8688, 32.5249],
+    "Hatip Cd. Meram": [37.8476, 32.4575]
+  };
+
+  // konumlar.json içeriğini buraya yapıştırdık
+  const araclar = [
+    {
+      "plaka": "34ABC123",
+      "konum": "Rauf Denktaş Cd. Selcuklu"
+    },
+    {
+      "plaka": "06DEF456",
+      "konum": "Eski Meram Cd. Meram"
+    },
+    {
+      "plaka": "35GHI789",
+      "konum": "Şehit Nazım Bey Cd. Karatay"
+    },
+    {
+      "plaka": "42ABC123",
+      "konum": "Fetih Cd. Karatay"
+    },
+    {
+      "plaka": "42DEF456",
+      "konum": "Hatip Cd. Meram"
+    }
+  ];
+
+  var harita = L.map('harita').setView([37.87, 32.48], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Harita verisi © OpenStreetMap'
+  }).addTo(harita);
+
+  // Marker ekle
+  araclar.forEach(arac => {
+    const konum = konumKoordinatlari[arac.konum];
+    if (konum) {
+      L.marker(konum)
+        .addTo(harita)
+        .bindPopup(`<b>${arac.plaka}</b><br>${arac.konum}`);
+    }
+  });
+</script>
+
+</body>
+</html>
